@@ -1,13 +1,34 @@
-import os
-SECRET_KEY = os.urandom(32)
-# Grabs the folder where the script runs.
-basedir = os.path.abspath(os.path.dirname(__file__))
+class Config:
+   
+    SQLALCHEMY_DATABASE_URI = 'postgresql://martin023:0000@localhost/fyyur_app'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SECRET_KEY = 'my_key'
+    UPLOADED_PHOTOS_DEST='app/static/photos'
+    
+    
 
-# Enable debug mode.
-DEBUG = True
+class ProdConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql://martin023:0000@localhost/fyyur_app'
+    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI =SQLALCHEMY_DATABASE_URI.replace("postgres://","postgresql://",1)
 
-# Connect to the database
 
 
-# TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = '<Put your local database url>'
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://martin023:0000@localhost/fyyur_app'
+
+
+  
+
+class DevConfig(Config):
+    DEBUG = True
+
+
+    
+
+config_options = {
+    'development': DevConfig,
+    'production': ProdConfig,
+    'test':TestConfig
+    
+}
