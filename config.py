@@ -7,9 +7,15 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 
 # Connect to the database
+# using environment variables to hide importnant details of the url.
 
+DB_USERNAME = os.getenv("DB_USERNAME")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_SERVER = os.getenv("DB_SERVER")
+DB_NAME = os.getenv("DB_NAME")
 
 # TODO IMPLEMENT DATABASE URL
+SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{DB_USERNAME}:{DB_PASSWORD}@{DB_SERVER}/{DB_NAME}"
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://martin023:0000@localhost/fyyur_app'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
